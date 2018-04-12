@@ -1,2 +1,5 @@
-# jwt-go-validation
-Validates JWT - JSON Web Tokens in Go (golang)
+# JWT Go - Validation
+This package wraps the jwt-go validation api in a more readable way.
+
+## How to Use
+You can see the test file in /test directory
