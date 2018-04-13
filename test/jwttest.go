@@ -8,6 +8,7 @@ import (
 func main() {
 	testValidSignature()
 	testInValidSignature()
+	testParse()
 	testDecode()
 	testIdClaim()
 }
@@ -35,11 +36,28 @@ func testInValidSignature() {
 	fmt.Println(test)
 }
 
+func testParse() {
+	signatureString := "fd6e28d3186f799458595dd466c8c957daa0a7ba"
+	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0NjUwLCJuYW1lIjoiTWF5a29ubiBXZWxpbmd0b24gQ2FuZGlkbyIsImlhdCI6MTUyMzQ2ODQwMiwiZXhwIjoxNTI2MDYwNDAyLCJpc3MiOiIxNzcuMjAuMjI1LjE2MiIsInN1YiI6IjExNDY1MCJ9.VIqAzk7_eilxxgOFVu_ygCoc2FfyafltyFoMqo2Be7A"
+
+	test := false
+	if token, _ := jwt_go_validation.JwtParse(signatureString, tokenString); token != nil {
+		test = true
+	}
+
+	fmt.Println("Test Parse:")
+	fmt.Println(test)
+}
+
 func testDecode() {
 	signatureString := "fd6e28d3186f799458595dd466c8c957daa0a7ba"
 	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0NjUwLCJuYW1lIjoiTWF5a29ubiBXZWxpbmd0b24gQ2FuZGlkbyIsImlhdCI6MTUyMzQ2ODQwMiwiZXhwIjoxNTI2MDYwNDAyLCJpc3MiOiIxNzcuMjAuMjI1LjE2MiIsInN1YiI6IjExNDY1MCJ9.VIqAzk7_eilxxgOFVu_ygCoc2FfyafltyFoMqo2Be7A"
-	claims := jwt_go_validation.JwtDecode(signatureString, tokenString)
-	_, test := claims["id"]
+
+	test := false
+	if token, _ := jwt_go_validation.JwtParse(signatureString, tokenString); token != nil {
+		claims := jwt_go_validation.JwtDecode(token)
+		_, test = claims["id"]
+	}
 
 	fmt.Println("Test Decode:")
 	fmt.Println(test)
