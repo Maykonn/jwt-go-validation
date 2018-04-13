@@ -55,7 +55,7 @@ func testDecode() {
 
 	test := false
 	if token, _ := jwt_go_validation.JwtParse(signatureString, tokenString); token != nil {
-		claims := jwt_go_validation.JwtDecode(token)
+		claims, _ := jwt_go_validation.JwtDecode(token)
 		_, test = claims["id"]
 	}
 
@@ -64,10 +64,11 @@ func testDecode() {
 }
 
 func testIdClaim() {
+	id := "114650"
 	signatureString := "fd6e28d3186f799458595dd466c8c957daa0a7ba"
 	tokenString := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTE0NjUwLCJuYW1lIjoiTWF5a29ubiBXZWxpbmd0b24gQ2FuZGlkbyIsImlhdCI6MTUyMzQ2ODQwMiwiZXhwIjoxNTI2MDYwNDAyLCJpc3MiOiIxNzcuMjAuMjI1LjE2MiIsInN1YiI6IjExNDY1MCJ9.VIqAzk7_eilxxgOFVu_ygCoc2FfyafltyFoMqo2Be7A"
-	id := "114650"
-	ret, _ := jwt_go_validation.JwtIdClaimIsValid(signatureString, tokenString, id)
+	token, _ := jwt_go_validation.JwtParse(signatureString, tokenString)
+	ret, _ := jwt_go_validation.JwtIdClaimIsValid(token, id)
 
 	fmt.Println("Test ID Claim:")
 	fmt.Println(ret)
